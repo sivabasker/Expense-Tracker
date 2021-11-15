@@ -17,7 +17,7 @@ if (config.ENV === 'development') {
 
 app.use('/api/v1/transactions', transactions);
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'public', 'index.html')));
 
 const PORT = config.PORT || 5000;
