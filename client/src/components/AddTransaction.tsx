@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { GlobalContext, transactionType } from '../context/GlobalState';
-import { v4 as uuid } from 'uuid';
+import { ObjectID } from 'bson';
 
 export const AddTransaction = () => {
     const [text, setText] = useState('');
@@ -9,11 +9,10 @@ export const AddTransaction = () => {
     const onSubmit = (e: any) => {
         e.preventDefault();
         var newTransaction: transactionType = {
-            id: uuid(),
+            _id: (new ObjectID()).toString(),
             text,
             amount: +amount
         };
-        console.log(newTransaction);
         addTransaction(newTransaction);
     }
 
