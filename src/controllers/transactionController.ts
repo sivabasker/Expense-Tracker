@@ -1,8 +1,10 @@
-const Transaction = require('../models/Transactions')
+import { TransactionModel } from "./../models/Transactions"
+import * as mongoose from "mongoose";
 
-exports.getTransactions = async (req, res, next) => {
+export const getTransactions = async (req, res, next) => {
     try {
-        const transactions = await Transaction.find();
+        var transactionModel = mongoose.model('Transaction', TransactionModel);
+        const transactions = await transactionModel.find();
         return res.status(200).json({
             success: true,
             count: transactions.length,
@@ -18,9 +20,10 @@ exports.getTransactions = async (req, res, next) => {
     }
 }
 
-exports.addTransaction = async (req, res, next) => {
+export const addTransaction = async (req, res, next) => {
     try {
-        const transactions = await Transaction.create(req.body);
+        var transactionModel = mongoose.model('Transaction', TransactionModel);
+        const transactions = await transactionModel.create(req.body);
         return res.status(201).json({
             success: true,
             data: transactions
@@ -29,7 +32,7 @@ exports.addTransaction = async (req, res, next) => {
     catch (err) {
         console.error(err);
         if (err.name === 'ValidationError') {
-            const message = Object.values(err.errors).map(val => val.message);
+            const message = Object.values(err.errors).map((val: any) => val?.message);
             return res.status(400).json({
                 success: false,
                 data: message
@@ -42,11 +45,11 @@ exports.addTransaction = async (req, res, next) => {
     }
 }
 
-exports.deleteTransaction = async (req, res, next) => {
+export const deleteTransaction = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(id);
-        const transactions = await Transaction.findById(id);
+        var transactionModel = mongoose.model('Transaction', TransactionModel);
+        const transactions = await transactionModel.findById(id);
         console.log(transactions);
         if (!transactions) {
             return res.status(404).json({
@@ -63,7 +66,7 @@ exports.deleteTransaction = async (req, res, next) => {
     catch (err) {
         console.error(err);
         if (err.name === 'ValidationError') {
-            const message = Object.values(err.errors).map(val => val.message);
+            const message = Object.values(err.errors).map((val: any) => val.message);
             return res.status(400).json({
                 success: false,
                 data: message

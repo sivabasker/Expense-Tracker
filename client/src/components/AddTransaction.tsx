@@ -9,7 +9,7 @@ export const AddTransaction = () => {
     const onSubmit = (e: any) => {
         e.preventDefault();
         var newTransaction: transactionType = {
-            _id: (new ObjectID()).toString(),
+            _id: new ObjectID(),
             text,
             amount: +amount
         };

@@ -1,9 +1,10 @@
 import React, { createContext, ReactNode, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
+import { ObjectId } from 'mongoose';
 
 export type transactionType = {
-    _id: string;
+    _id: ObjectId;
     text: string;
     amount: number;
 };
